@@ -1,0 +1,12 @@
+version: "2"
+services:
+
+  internetshop:
+    container_name: internetshop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - .:/app/

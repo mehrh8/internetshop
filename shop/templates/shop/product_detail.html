@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div style="max-width: 300px; margin: 0 auto; padding: 10px; border: 1px solid #e6e6e6; border-radius: 10px; background-color: white;">
+    <h3>{{ product.name }}</h3>
+    <small>{{ product.created }}</small>
+    <img src="{{ product.image_url }}" width="280px" height="280px" alt="{{ product.name }}">
+    <br><br>
+    <p>{{ product.price }} Dollar</p>
+    <p>{{ product.description }}</p>
+    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input type="submit" class="btn btn-primary" value="Add to cart">
+    </form>
+</div>
+{% endblock %}

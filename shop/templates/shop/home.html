@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title-head %}
+<div style="max-width: 1080px; margin: 0 auto;">
+    Shop
+</div>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 1080px; margin: 0 auto;">
+    <form action="{% url 'shop:search_filter' %}" method="post">
+        {% csrf_token %}
+        <div class="col-2" style="float: left;">
+            {{ search }}
+        </div>
+        <input type="submit" value="Search" class="btn btn-success" style="margin-top: 24px; margin-left: 10px;">
+    </form>
+    <div style="clear: both; height: 20px;"></div>
+    <div style="padding-right: 15px; padding-top: 5px;">Categories: </div>
+    {% for category in categories %}
+        <div class="btn-group">
+            <a href="{{ category.get_absolut_url }}" class="btn btn-danger">{{ category.name }}</a>
+            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+
+            </button>
+            <ul class="dropdown-menu">
+                {% for sub in category.sub_categories.all %}
+                    <li><a class="dropdown-item" href="{{ sub.get_absolut_url }}">{{ sub.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    <br><br>
+    <br><br>
+    {% for product in products %}
+        <div class="card" style="width: 300px; display: inline-block; border: 1px solid #e6e6e6; border-radius: 10px; background-color: white; padding: 10px; ">
+            <img src="{{ product.image_url }}" class="card-img-op" alt="..." width="280", height="280">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description|truncatewords:5 }}</p>
+                <a href="{{ product.get_absolut_url }}" class="btn btn-primary">show detail</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
